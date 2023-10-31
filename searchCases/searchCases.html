@@ -1,0 +1,42 @@
+<template>
+
+    <!-- Container -->
+    <div class="slds-theme_default slds-box">
+
+        <!-- Header -->
+        <header class="slds-grid">
+            <div class="slds-col slds-size_11-of-12 slds-grid slds-grid_vertical-align-center">
+                <lightning-icon class="slds-m-right_small" icon-name="standard:case" alternative-text="Case" title="Case"></lightning-icon>
+                <h2 class="slds-col slds-text-heading_medium">Search Cases</h2>
+            </div>
+            <div class="slds-col slds-size_1-of-12">
+                <lightning-button-menu class="slds-float_right" alternative-text="Show menu" menu-alignment="auto" onselect={handleMenuSelect}>
+                    <template for:each={optionsList} for:item="option">
+                        <lightning-menu-item key={option.value} value={option.value} label={option.label} disabled={option.disabled}></lightning-menu-item>
+                    </template>
+                </lightning-button-menu>
+            </div>
+        </header>
+ 
+        <!-- Content -->
+        <section class="slds-m-top_large slds-m-bottom_large">
+
+            <!-- Search Input -->
+            <div onkeyup={handleSearchInput}>
+                <lightning-input
+                    name="search-case"
+                    label="Press 'Enter' to Search"
+                    type="search"
+                    placeholder={placeholderText}
+                    data-id="input-search-case"
+                ></lightning-input>
+                <div if:true={inputError} class="slds-form-element__help slds-text-color_error">{inputMessageError}</div>
+            </div>
+
+            <!-- Result -->
+            
+        </section>
+
+    </div>
+    
+</template>
