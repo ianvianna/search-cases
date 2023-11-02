@@ -14,10 +14,10 @@ export default class SearchCases extends LightningElement {
             example: '500Ab00000abABCAB0'
         }},
     ];
-    @api caseFound;
-
+    @api result;
     @track selectedOption = '';
     @track inputError = false;
+    @track showResult = false;
 
 
     // Getters are reactive in LWC:
@@ -39,6 +39,7 @@ export default class SearchCases extends LightningElement {
     handleMenuSelect(event) {
         this.selectedOption = this.getLabelFromValue(event.detail.value);
         this.inputError = false;
+        this.showResult = false;
 
         const inputElement = this.template.querySelector('[data-id="input-search-case"]');
         inputElement.value = '';
@@ -70,12 +71,13 @@ export default class SearchCases extends LightningElement {
                 this.inputError = false;
 
                 const result = await this.getCase(event.target.value);
-                this.caseFound = result;
+                result ? this.showResult = true : this.showResult = false;
+                this.result = result;
             } else {
                 event.target.classList.add('slds-has-error');
                 this.inputError = true;
             }
-            
+
             const inputElement = this.template.querySelector('[data-id="input-search-case"]');
             inputElement.value = '';
         }

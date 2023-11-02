@@ -6,7 +6,6 @@ public class SearchCasesController {
         
         Case caseFound = (Case) Database.query(query);
         
-        System.debug('ABC: ' + caseFound);
         return caseFound;
     }
     
