@@ -32,25 +32,8 @@
             </div>
         </section>
 
-        <!-- Result -->
-        <section if:true={showResult} class="slds-m-bottom_large">
-            <table class="table-border-radius slds-table slds-table_bordered slds-table_col-bordered slds-border_left slds-border_right">
-                <thead>
-                    <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Case Number</th>
-                        <th scope="col">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{result.Id}</td>
-                        <td>{result.CaseNumber}</td>
-                        <td>{result.Status}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+        <!-- Result-->
+        <c-search-cases-table result={result}></c-search-cases-table>
 
     </div>
     

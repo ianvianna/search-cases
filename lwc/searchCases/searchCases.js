@@ -17,7 +17,6 @@ export default class SearchCases extends LightningElement {
     @api result;
     @track selectedOption = '';
     @track inputError = false;
-    @track showResult = false;
 
 
     // Getters are reactive in LWC:
@@ -39,10 +38,9 @@ export default class SearchCases extends LightningElement {
     handleMenuSelect(event) {
         this.selectedOption = this.getLabelFromValue(event.detail.value);
         this.inputError = false;
-        this.showResult = false;
-
         const inputElement = this.template.querySelector('[data-id="input-search-case"]');
         inputElement.value = '';
+        this.result = null;
     }
 
 
@@ -50,7 +48,6 @@ export default class SearchCases extends LightningElement {
     // Disable button to prevent user from choosing the same value:
     getLabelFromValue(value) {
         let foundValue = null;
-
         this.optionsList.forEach((element) => {
             if(element.value !== value) {
                 element.disabled = false;
@@ -69,15 +66,12 @@ export default class SearchCases extends LightningElement {
             if(this.selectedOption.validation.regexp.test(event.target.value)) {
                 event.target.classList.remove('slds-has-error');
                 this.inputError = false;
-
                 const result = await this.getCase(event.target.value);
-                result ? this.showResult = true : this.showResult = false;
                 this.result = result;
             } else {
                 event.target.classList.add('slds-has-error');
                 this.inputError = true;
             }
-
             const inputElement = this.template.querySelector('[data-id="input-search-case"]');
             inputElement.value = '';
         }
@@ -89,7 +83,6 @@ export default class SearchCases extends LightningElement {
         try {
             const result = await getCaseDetails({ caseDetail: inputValue, searchType: this.selectedOption.value });
             this.toastEventGenerator('Success!', `${result.CaseNumber} - Case was found!`, 'success');
-            
             return result;
         } catch(error) {
             this.toastEventGenerator('Error!', `${error.body.message} - Case was not found!`, 'error');
